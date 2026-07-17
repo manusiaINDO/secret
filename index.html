@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Kamu ✨</title>
+    <!-- Google Fonts untuk font yang imut dan estetik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Playpen+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk ikon-ikon manis -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-pastel: #fff0f3;
+            --primary-pink: #ffb3c1;
+            --dark-pink: #ff758f;
+            --soft-blue: #e8f0fe;
+            --text-dark: #495057;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-pastel) 0%, var(--soft-blue) 100%);
+            color: var(--text-dark);
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* --- CONTAINER UTAMA --- */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 3px solid #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 179, 193, 0.2);
+            padding: 35px 25px;
+            width: 100%;
+            max-width: 420px;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- SCREEN CONTROL --- */
+        .screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: popIn 0.6s ease forwards;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- 1. LOADING SCREEN --- */
+        .loader-heart {
+            font-size: 4rem;
+            color: var(--dark-pink);
+            animation: heartbeat 1.2s infinite;
+        }
+
+        .loader-text {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: var(--dark-pink);
+            font-weight: 600;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.25); }
+            40% { transform: scale(1.1); }
+            60% { transform: scale(1.25); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- 2. QUESTION SCREEN --- */
+        .emoji-header {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            color: #5c677d;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            height: 55px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .btn-yes {
+            background: var(--dark-pink);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background: #ff4d6d;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 117, 143, 0.4);
+        }
+
+        .btn-no {
+            background: #e9ecef;
+            color: #6c757d;
+            position: absolute;
+            transition: all 0.15s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- 3. ENVELOPE SCREEN --- */
+        .envelope-container {
+            cursor: pointer;
+            position: relative;
+            width: 250px;
+            height: 160px;
+            background-color: var(--primary-pink);
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 15px 30px rgba(255, 117, 143, 0.15);
+            margin: 30px 0;
+        }
+
+        .envelope-container::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: 0;
+            border-left: 125px solid transparent;
+            border-right: 125px solid transparent;
+            border-bottom: 120px solid var(--primary-pink);
+            filter: brightness(0.95);
+            transform-origin: bottom;
+            transition: transform 0.5s ease;
+            z-index: 3;
+        }
+
+        .envelope-container.open::before {
+            transform: rotateX(180deg) translateY(120px);
+            z-index: 1;
+        }
+
+        .letter-inside {
+            position: absolute;
+            bottom: 5px;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            z-index: 2;
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .envelope-container.open .letter-inside {
+            transform: translateY(-90px) scale(1.05);
+            z-index: 4;
+        }
+
+        .letter-inside p {
+            font-family: 'Playpen Sans', cursive;
+            font-size: 1.2rem;
+            color: var(--dark-pink);
+            font-weight: 600;
+        }
+
+        /* --- 4. TYPING TEXT SCREEN --- */
+        .text-box {
+            background: #fffdf9;
+            border: 2px dashed var(--primary-pink);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            text-align: left;
+            min-height: 180px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+        }
+
+        .text-box p {
+            font-family: 'Playpen Sans', cursive;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #4a4e69;
+        }
+
+        /* --- 5. TIMELINE SCREEN --- */
+        .timeline {
+            margin: 20px 0;
+            border-left: 3px dashed var(--primary-pink);
+            padding-left: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '🌸';
+            position: absolute;
+            left: -31px;
+            top: -2px;
+            background: var(--bg-pastel);
+            font-size: 1rem;
+            padding: 2px;
+        }
+
+        .timeline-title {
+            font-weight: 700;
+            color: var(--dark-pink);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        /* POLAROID STYLE */
+        .polaroid {
+            background: white;
+            padding: 10px 10px 25px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: rotate(-3deg);
+            margin: 20px auto;
+            max-width: 190px;
+            border: 1px solid #f1f3f5;
+            position: relative;
+        }
+
+        .polaroid::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 35%;
+            width: 60px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            transform: rotate(5deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-left: 1px dashed rgba(0,0,0,0.1);
+            border-right: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .polaroid-caption {
+            font-family: 'Playpen Sans', cursive;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        /* --- 6. THE END SCREEN --- */
+        .end-emoji {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .wa-btn {
+            background-color: #25D366;
+            color: white !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 14px 28px;
+        }
+
+        .wa-btn:hover {
+            background-color: #20ba5a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* --- CONFETTI CANVAS --- */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <div class="card" id="mainCard">
+        
+        <!-- 1. LOADING SCREEN -->
+        <div class="screen active" id="screenLoading">
+            <div class="loader-heart"><i class="fa-solid fa-heart"></i></div>
+            <div class="loader-text">Memuat kebahagiaan... ✨</div>
+        </div>
+
+        <!-- 2. QUESTION SCREEN -->
+        <div class="screen" id="screenQuestion">
+            <div class="emoji-header">✨</div>
+            <h2>There's Something Waiting For You...</h2>
+            <p class="question-text">Tapi, boleh jujur dulu... kamu masih ngambek ya sama aku? 🥺👉👈</p>
+            
+            <div class="btn-group" id="btnGroup">
+                <button class="btn btn-yes" onclick="nextScreen('screenEnvelope')">Iya / Nggak tahu 🙈</button>
+                <!-- Tombol "Gak" yang tidak akan pernah bisa ditekan -->
+                <button class="btn btn-no" id="btnNo">Nggakk! 😜</button>
+            </div>
+        </div>
+
+        <!-- 3. ENVELOPE SCREEN -->
+        <div class="screen" id="screenEnvelope">
+            <div class="emoji-header">💌</div>
+            <h2>Sebuah Surat Untukmu</h2>
+            <p style="color: #6c757d; font-size: 0.95rem; margin-top: 5px;">Ketuk amplop di bawah untuk membukanya</p>
+            
+            <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+                <div class="letter-inside">
+                    <p>Buka Aku... ✨</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TYPING TEXT SCREEN -->
+        <div class="screen" id="screenText">
+            <div class="text-box">
+                <p id="typingText"></p>
+            </div>
+            <button class="btn btn-yes" id="btnLanjut" style="margin-top: 25px; display: none;" onclick="nextScreen('screenTimeline')">Baca Selengkapnya 🤍</button>
+        </div>
+
+        <!-- 5. TIMELINE SCREEN -->
+        <div class="screen" id="screenTimeline">
+            <h2>Memories & Apology 🌸</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Terima Kasih Banyak</div>
+                    <div class="timeline-desc">Makasih ya udah mau bertahan, dengerin semua cerita random aku, dan selalu sabar ngadepin sifat unikku selama ini.</div>
+                </div>
+            </div>
+
+            <!-- Polaroid Photo (Menggunakan foto estetik random gratis, silakan ganti jika mau) -->
+            <div class="polaroid">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Momen Indah">
+                <div class="polaroid-caption">Momen Kita ✨</div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Maafkan Aku Ya...</div>
+                    <div class="timeline-desc">Maaf banget kalau ketikan atau sikapku kemarin sempat bikin kamu kesal, sedih, atau salah paham. Aku sama sekali gak ada niat begitu.</div>
+                </div>
+            </div>
+
+            <button class="btn btn-yes" style="margin-top: 15px;" onclick="triggerEnding()">Gamau kabur, janji! 😂 ❤️</button>
+        </div>
+
+        <!-- 6. THE END SCREEN -->
+        <div class="screen" id="screenEnd">
+            <div class="end-emoji">❤️✨</div>
+            <h2>The End!</h2>
+            <p style="color: #6c757d; font-size: 0.95rem; max-width: 320px; line-height: 1.6; margin-top: 10px;">
+                Makasih ya udah mau baca sampai akhir. Kabarin aku lewat WhatsApp kalau kamu udah baca pesan ini!
+            </p>
+            
+            <!-- Silakan ganti nomor wa di bawah ini (Ganti bagian 628123456789 dengan nomor aslimu) -->
+            <a href="https://wa.me/628123456789?text=Aku%20udah%20baca%20websitenya!%20Udah%20dimaafin%20kok%20hehe%20❤️" class="btn wa-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Balas di WhatsApp
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. SET TRANSISI LOADING SCREEN ---
+        setTimeout(() => {
+            document.getElementById('screenLoading').classList.remove('active');
+            document.getElementById('screenQuestion').classList.add('active');
+        }, 2200);
+
+        // --- 2. JEBAKAN TOMBOL "GAK/TIDAK" (MENGHINDAR) ---
+        const btnNo = document.getElementById('btnNo');
+        const btnGroup = document.getElementById('btnGroup');
+
+        function moveButton() {
+            // Dapatkan batas wadah tombol
+            const groupRect = btnGroup.getBoundingClientRect();
+            
+            // Tentukan jarak acak tombol agar tetap berada di area layar yang terlihat
+            const maxX = groupRect.width - btnNo.offsetWidth;
+            const maxY = 250; // Jangkauan vertikal maksimum tombol menghindar
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor((Math.random() * maxY) - (maxY / 2));
+
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        // Jalankan efek saat kursor mendekat (desktop) atau disentuh (mobile)
+        btnNo.addEventListener('mouseover', moveButton);
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // --- 3. NAVIGASI ANTAR LAYAR ---
+        function nextScreen(screenId) {
+            document.querySelector('.screen.active').classList.remove('active');
+            document.getElementById(screenId).classList.add('active');
+
+            if(screenId === 'screenText') {
+                startTypingEffect();
+            }
+        }
+
+        // --- 4. BUKA AMPLOP ---
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+
+            // Pindah layar setelah animasi amplop terbuka selesai
+            setTimeout(() => {
+                nextScreen('screenText');
+            }, 1600);
+        }
+
+        // --- 5. EFEK MENGETIK ---
+        const messageText = "Hai... Lewat website kecil ini, aku cuma ingin menyampaikan sesuatu. Terima kasih banyak ya sudah bersedia meluangkan waktu sejenak untuk membuka pesan ini. Tolong dibaca pelan-pelan ya sampai akhir... ✨";
+        let typingIndex = 0;
+        const typingSpeed = 45; // mili-detik per karakter
+
+        function startTypingEffect() {
+            const typingContainer = document.getElementById('typingText');
+            function type() {
+                if (typingIndex < messageText.length) {
+                    typingContainer.innerHTML += messageText.charAt(typingIndex);
+                    typingIndex++;
+                    setTimeout(type, typingSpeed);
+                } else {
+                    document.getElementById('btnLanjut').style.display = 'inline-block';
+                }
+            }
+            type();
+        }
+
+        // --- 6. ENDING & CONFETTI ---
+        function triggerEnding() {
+            nextScreen('screenEnd');
+            initConfetti();
+        }
+
+        // --- SISTEM EFEK CONFETTI ---
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        let confetti = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        class ConfettiParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 8 + 4;
+                this.color = ['#ffb3c1', '#ff8fa3', '#e8f0fe', '#ffd166', '#a8dadc'][Math.floor(Math.random() * 5)];
+                this.speedX = Math.random() * 4 - 2;
+                this.speedY = Math.random() * 3 + 2;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 4 - 2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                // Ulangi jatuh dari atas jika sudah di luar layar bawah
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function initConfetti() {
+            resizeCanvas();
+            confetti = [];
+            for (let i = 0; i < 120; i++) {
+                confetti.push(new ConfettiParticle());
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach((particle) => {
+                particle.update();
+                particle.draw();
+            });
+            animationFrameId = requestAnimationFrame(animateConfetti);
+        }
+    </script>
+</body>
+</html>
