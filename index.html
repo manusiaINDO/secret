@@ -4,526 +4,390 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Untuk Kamu ✨</title>
-    <!-- Google Fonts untuk font yang imut dan estetik -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Playpen+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome untuk ikon-ikon manis -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <!-- Google Fonts untuk kesan aesthetic & cute -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-pastel: #fff0f3;
-            --primary-pink: #ffb3c1;
-            --dark-pink: #ff758f;
-            --soft-blue: #e8f0fe;
-            --text-dark: #495057;
+            --primary-pink: #ffb7b2;
+            --dark-pink: #ff8fa3;
+            --pastel-blue: #e8f0fe;
+            --bg-color: #fff5f5;
+            --text-color: #5d5d5d;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Quicksand', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--bg-pastel) 0%, var(--soft-blue) 100%);
-            color: var(--text-dark);
-            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--pastel-blue) 100%);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 20px;
         }
 
-        /* --- CONTAINER UTAMA --- */
-        .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 3px solid #ffffff;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(255, 179, 193, 0.2);
-            padding: 35px 25px;
+        /* Container Transisi Antar Layar */
+        .screen {
+            display: none;
             width: 100%;
-            max-width: 420px;
-            min-height: 480px;
-            display: flex;
+            max-width: 450px;
+            min-height: 100vh;
+            padding: 40px 20px;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* --- SCREEN CONTROL --- */
-        .screen {
-            display: none;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            animation: popIn 0.6s ease forwards;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px);
         }
 
         .screen.active {
             display: flex;
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- 1. LOADING SCREEN --- */
-        .loader-heart {
-            font-size: 4rem;
-            color: var(--dark-pink);
-            animation: heartbeat 1.2s infinite;
+        #loadingScreen {
+            background-color: var(--bg-color);
+            z-index: 999;
+        }
+        .heart-loader {
+            font-size: 3.5rem;
+            animation: pulse 1.2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
-        .loader-text {
-            margin-top: 15px;
-            font-size: 1.1rem;
-            color: var(--dark-pink);
-            font-weight: 600;
-        }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            20% { transform: scale(1.25); }
-            40% { transform: scale(1.1); }
-            60% { transform: scale(1.25); }
-            80% { transform: scale(1); }
-            100% { transform: scale(1); }
-        }
-
-        /* --- 2. QUESTION SCREEN --- */
-        .emoji-header {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            animation: bounce 2s infinite;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            color: var(--dark-pink);
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .question-text {
-            font-size: 1.1rem;
-            margin: 20px 0;
-            color: #5c677d;
-        }
-
-        .btn-group {
+        /* --- 2. QUESTION SCREEN (Awal) --- */
+        .btn-container {
+            margin-top: 30px;
+            position: relative;
+            width: 100%;
+            height: 60px;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            width: 100%;
-            height: 55px;
-            position: relative;
-            margin-top: 20px;
+            gap: 20px;
         }
-
         .btn {
-            padding: 12px 25px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 143, 163, 0.2);
         }
-
-        .btn-yes {
-            background: var(--dark-pink);
-            color: white;
-        }
-
-        .btn-yes:hover {
-            background: #ff4d6d;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 117, 143, 0.4);
-        }
-
-        .btn-no {
-            background: #e9ecef;
-            color: #6c757d;
+        .btn-yes { background-color: var(--dark-pink); color: white; }
+        .btn-no { 
+            background-color: #e0e0e0; 
+            color: #777; 
             position: absolute;
-            transition: all 0.15s ease-out;
-            z-index: 10;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* --- 3. ENVELOPE SCREEN --- */
+        /* --- 3. ENVELOPE SCREEN (Perbaikan Bug Surat Bocor) --- */
         .envelope-container {
-            cursor: pointer;
             position: relative;
-            width: 250px;
-            height: 160px;
-            background-color: var(--primary-pink);
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 15px 30px rgba(255, 117, 143, 0.15);
-            margin: 30px 0;
+            width: 300px;
+            height: 200px;
+            margin: 50px auto 0 auto;
+            cursor: pointer;
+            perspective: 1000px;
         }
-
-        .envelope-container::before {
-            content: '';
+        .envelope {
             position: absolute;
-            top: -120px;
+            bottom: 0;
             left: 0;
-            border-left: 125px solid transparent;
-            border-right: 125px solid transparent;
-            border-bottom: 120px solid var(--primary-pink);
-            filter: brightness(0.95);
-            transform-origin: bottom;
-            transition: transform 0.5s ease;
-            z-index: 3;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-pink);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            z-index: 2; /* Menutupi surat saat di dalam */
         }
-
-        .envelope-container.open::before {
-            transform: rotateX(180deg) translateY(120px);
-            z-index: 1;
-        }
-
-        .letter-inside {
+        /* Tutup Amplop Segitiga */
+        .flap {
             position: absolute;
-            bottom: 5px;
-            left: 5%;
-            width: 90%;
-            height: 90%;
-            background: white;
-            border-radius: 10px;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ffa39e;
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out, z-index 0.3s;
+            z-index: 4; /* Berada paling depan menutupi semuanya */
+        }
+        /* Surat di dalam (Tersimpan rapi di bawah amplop) */
+        .letter {
+            position: absolute;
+            bottom: 10px; left: 15px;
+            width: 270px; height: 170px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            z-index: 1; /* Di belakang badan amplop agar tidak kelihatan di awal */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-            z-index: 2;
-            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .envelope-container.open .letter-inside {
-            transform: translateY(-90px) scale(1.05);
-            z-index: 4;
+        /* Efek saat amplop diklik */
+        .envelope-container.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1; /* Saat membuka, lipatan pindah ke belakang */
         }
-
-        .letter-inside p {
-            font-family: 'Playpen Sans', cursive;
-            font-size: 1.2rem;
-            color: var(--dark-pink);
-            font-weight: 600;
+        .envelope-container.open .letter {
+            transform: translateY(-130px);
+            z-index: 3; /* Surat meluncur naik melompati badan amplop */
         }
 
         /* --- 4. TYPING TEXT SCREEN --- */
         .text-box {
-            background: #fffdf9;
-            border: 2px dashed var(--primary-pink);
-            border-radius: 20px;
-            padding: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             width: 100%;
-            text-align: left;
             min-height: 180px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
-        }
-
-        .text-box p {
-            font-family: 'Playpen Sans', cursive;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #4a4e69;
-        }
-
-        /* --- 5. TIMELINE SCREEN --- */
-        .timeline {
-            margin: 20px 0;
-            border-left: 3px dashed var(--primary-pink);
-            padding-left: 20px;
             text-align: left;
-            width: 100%;
-        }
-
-        .timeline-item {
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '🌸';
-            position: absolute;
-            left: -31px;
-            top: -2px;
-            background: var(--bg-pastel);
-            font-size: 1rem;
-            padding: 2px;
-        }
-
-        .timeline-title {
-            font-weight: 700;
-            color: var(--dark-pink);
             font-size: 1.1rem;
-            margin-bottom: 5px;
+            line-height: 1.7;
+            border: 2px solid #fff;
         }
 
-        .timeline-desc {
-            font-size: 0.9rem;
-            color: #6c757d;
-            line-height: 1.5;
+        /* --- 5. TIMELINE & FOTO POLAROID SERANGKAIAN --- */
+        .polaroid-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            margin: 20px 0;
         }
-
-        /* POLAROID STYLE */
         .polaroid {
             background: white;
-            padding: 10px 10px 25px 10px;
+            padding: 12px 12px 25px 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transform: rotate(-3deg);
-            margin: 20px auto;
-            max-width: 190px;
-            border: 1px solid #f1f3f5;
-            position: relative;
+            max-width: 260px;
+            width: 100%;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease;
         }
-
-        .polaroid::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: 35%;
-            width: 60px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(2px);
-            transform: rotate(5deg);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-            border-left: 1px dashed rgba(0,0,0,0.1);
-            border-right: 1px dashed rgba(0,0,0,0.1);
-        }
-
         .polaroid img {
             width: 100%;
-            height: 150px;
+            height: 190px;
             object-fit: cover;
             border-radius: 4px;
         }
-
         .polaroid-caption {
-            font-family: 'Playpen Sans', cursive;
-            font-size: 1.1rem;
-            margin-top: 10px;
-            color: #495057;
-            font-weight: 600;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            margin-top: 12px;
+            color: #444;
+        }
+        /* Posisi miring estetik berselang-seling */
+        .polaroid:nth-child(1) { transform: rotate(-3deg); }
+        .polaroid:nth-child(2) { transform: rotate(3deg); }
+        .polaroid:nth-child(3) { transform: rotate(-2deg); }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 10;
         }
 
-        /* --- 6. THE END SCREEN --- */
-        .end-emoji {
-            font-size: 4rem;
-            margin-bottom: 10px;
-            animation: float 3s infinite ease-in-out;
+        /* --- APOLOGY SCREEN (Jebakan Tombol Maafan) --- */
+        #apologyBtnNo {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .wa-btn {
-            background-color: #25D366;
-            color: white !important;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-            padding: 14px 28px;
-        }
-
-        .wa-btn:hover {
-            background-color: #20ba5a;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        /* --- CONFETTI CANVAS --- */
-        #confettiCanvas {
+        /* --- CONFETTI --- */
+        .confetti {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
+            width: 10px; height: 10px;
+            z-index: 1000;
+            border-radius: 50%;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="confettiCanvas"></canvas>
+    <!-- 1. LOADING SCREEN -->
+    <div class="screen active" id="loadingScreen">
+        <div class="heart-loader">❤️</div>
+        <p style="margin-top: 15px; font-weight: 600; letter-spacing: 1px;">Sabar ya, lagi loading...</p>
+    </div>
 
-    <div class="card" id="mainCard">
+    <!-- 2. QUESTION SCREEN (Masih Ngambek?) -->
+    <div class="screen" id="questionScreen">
+        <h2 style="font-size: 1.8rem; color: var(--dark-pink);">✨ Ada Sesuatu Menunggumu...</h2>
+        <p style="margin-top: 10px; color: #888;">Tapi sebelum lanjut, jawab jujur ya...</p>
+        <h3 style="margin-top: 30px; font-size: 1.3rem;">Kamu sekarang masih ngambek ya? 🥺</h3>
         
-        <!-- 1. LOADING SCREEN -->
-        <div class="screen active" id="screenLoading">
-            <div class="loader-heart"><i class="fa-solid fa-heart"></i></div>
-            <div class="loader-text">Memuat kebahagiaan... ✨</div>
+        <div class="btn-container">
+            <button class="btn btn-yes" onclick="nextScreen('envelopeScreen')">Iya sedikit / Gak tahu</button>
+            <button class="btn btn-no" id="btnNo" onmouseover="escapeButton('btnNo')" onclick="escapeButton('btnNo')">Nggakk 😜</button>
         </div>
+    </div>
 
-        <!-- 2. QUESTION SCREEN -->
-        <div class="screen" id="screenQuestion">
-            <div class="emoji-header">✨</div>
-            <h2>There's Something Waiting For You...</h2>
-            <p class="question-text">Tapi, boleh jujur dulu... kamu masih ngambek ya sama aku? 🥺👉👈</p>
-            
-            <div class="btn-group" id="btnGroup">
-                <button class="btn btn-yes" onclick="nextScreen('screenEnvelope')">Iya / Nggak tahu 🙈</button>
-                <!-- Tombol "Gak" yang tidak akan pernah bisa ditekan -->
-                <button class="btn btn-no" id="btnNo">Nggakk! 😜</button>
+    <!-- 3. ENVELOPE SCREEN (Buka Surat Mulus) -->
+    <div class="screen" id="envelopeScreen">
+        <h2>Surat khusus buat kamu... 💌</h2>
+        <p style="color: #999; font-size: 0.9rem; margin-top: 5px;">Ketuk amplopnya untuk mengeluarkan isinya</p>
+        
+        <div class="envelope-container" id="envelope" onclick="openEnvelope()">
+            <div class="flap"></div>
+            <div class="envelope"></div>
+            <div class="letter">
+                <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--dark-pink); text-align: center;">Sent with Love ✨</p>
+                <p style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">Tap untuk membaca</p>
             </div>
         </div>
+    </div>
 
-        <!-- 3. ENVELOPE SCREEN -->
-        <div class="screen" id="screenEnvelope">
-            <div class="emoji-header">💌</div>
-            <h2>Sebuah Surat Untukmu</h2>
-            <p style="color: #6c757d; font-size: 0.95rem; margin-top: 5px;">Ketuk amplop di bawah untuk membukanya</p>
-            
-            <div class="envelope-container" id="envelope" onclick="openEnvelope()">
-                <div class="letter-inside">
-                    <p>Buka Aku... ✨</p>
-                </div>
-            </div>
-        </div>
+    <!-- 4. TYPING TEXT SCREEN -->
+    <div class="screen" id="textScreen">
+        <div class="text-box" id="typingBox"></div>
+        <button class="btn btn-yes" id="btnLanjut" style="margin-top: 30px; display: none;" onclick="nextScreen('timelineScreen')">Lihat Momen Kita 💖</button>
+    </div>
 
-        <!-- 4. TYPING TEXT SCREEN -->
-        <div class="screen" id="screenText">
-            <div class="text-box">
-                <p id="typingText"></p>
-            </div>
-            <button class="btn btn-yes" id="btnLanjut" style="margin-top: 25px; display: none;" onclick="nextScreen('screenTimeline')">Baca Selengkapnya 🤍</button>
-        </div>
-
-        <!-- 5. TIMELINE SCREEN -->
-        <div class="screen" id="screenTimeline">
-            <h2>Memories & Apology 🌸</h2>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-title">Terima Kasih Banyak</div>
-                    <div class="timeline-desc">Makasih ya udah mau bertahan, dengerin semua cerita random aku, dan selalu sabar ngadepin sifat unikku selama ini.</div>
-                </div>
-            </div>
-
-            <!-- Polaroid Photo (Menggunakan foto estetik random gratis, silakan ganti jika mau) -->
+    <!-- 5. TIMELINE & FOTO SERANGKAIAN -->
+    <div class="screen" id="timelineScreen" style="justify-content: flex-start; overflow-y: auto;">
+        <h2 style="color: var(--dark-pink); margin-bottom: 5px;">Our Moments ✨</h2>
+        <p style="color: #999; font-size: 0.9rem; margin-bottom: 25px;">Ingat momen-momen ini gak?</p>
+        
+        <div class="polaroid-gallery">
             <div class="polaroid">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Momen Indah">
-                <div class="polaroid-caption">Momen Kita ✨</div>
+                <img src="https://picsum.photos/300/250?random=11" alt="Momen 1">
+                <div class="polaroid-caption">Waktu itu seru banget! 🍕</div>
             </div>
 
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-title">Maafkan Aku Ya...</div>
-                    <div class="timeline-desc">Maaf banget kalau ketikan atau sikapku kemarin sempat bikin kamu kesal, sedih, atau salah paham. Aku sama sekali gak ada niat begitu.</div>
-                </div>
+            <div class="polaroid">
+                <img src="https://picsum.photos/300/250?random=12" alt="Momen 2">
+                <div class="polaroid-caption">Ketawa terus bareng kamu 🌸</div>
             </div>
 
-            <button class="btn btn-yes" style="margin-top: 15px;" onclick="triggerEnding()">Gamau kabur, janji! 😂 ❤️</button>
+            <div class="polaroid">
+                <img src="https://picsum.photos/300/250?random=13" alt="Momen 3">
+                <div class="polaroid-caption">Hari yang sangat berharga ☀️</div>
+            </div>
         </div>
 
-        <!-- 6. THE END SCREEN -->
-        <div class="screen" id="screenEnd">
-            <div class="end-emoji">❤️✨</div>
-            <h2>The End!</h2>
-            <p style="color: #6c757d; font-size: 0.95rem; max-width: 320px; line-height: 1.6; margin-top: 10px;">
-                Makasih ya udah mau baca sampai akhir. Kabarin aku lewat WhatsApp kalau kamu udah baca pesan ini!
-            </p>
-            
-            <!-- Silakan ganti nomor wa di bawah ini (Ganti bagian 628123456789 dengan nomor aslimu) -->
-            <a href="https://wa.me/628123456789?text=Aku%20udah%20baca%20websitenya!%20Udah%20dimaafin%20kok%20hehe%20❤️" class="btn wa-btn" target="_blank">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Balas di WhatsApp
-            </a>
-        </div>
+        <button class="btn btn-yes" style="margin: 30px 0;" onclick="nextScreen('apologyScreen')">Selesai Lihat ➡️</button>
+    </div>
 
+    <!-- 6. APOLOGY SCREEN (Jebakan Baru: Maafan) -->
+    <div class="screen" id="apologyScreen">
+        <h2 style="font-size: 1.8rem; color: var(--dark-pink);">Terima Kasih & Maaf Ya... 🙏</h2>
+        <p style="margin: 15px 0; line-height: 1.6; color: #666;">
+            Makasih banyak udah mau ngelihat foto-foto tadi. Aku mau minta maaf sedalam-dalamnya kalau akhir-akhir ini bikin kamu kesel atau ngerasa gak nyaman...
+        </p>
+        <h3 style="margin-top: 25px; font-size: 1.25rem;">Kamu mau kan maafin aku? 🥺👉👈</h3>
+
+        <div class="btn-container" style="margin-top: 35px;">
+            <button class="btn btn-yes" onclick="triggerEnding()">Maafin! 🥰</button>
+            <button class="btn btn-no" id="apologyBtnNo" onmouseover="escapeApologyBtn()" onclick="escapeApologyBtn()">Gak Mau! 😜</button>
+        </div>
+    </div>
+
+    <!-- 7. THE END SCREEN -->
+    <div class="screen" id="endScreen">
+        <h1 style="font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--dark-pink);">The End ❤️</h1>
+        <p style="margin: 15px 0 30px 0; max-width: 320px; line-height: 1.6;">
+            Yeayyy! Makasih banyak udah dimaafin! Aku janji gak bakal kabur-kaburan lagi kok 😂
+        </p>
+        
+        <a href="https://wa.me/628123456789?text=Aku%20udah%20baca%20websitenya!%20Udah%20aku%20maafin%20kok%20haha%20❤️" target="_blank" style="text-decoration: none;">
+            <button class="btn" style="background-color: #25D366; color: white; display: flex; align-items: center; gap: 8px; margin: 0 auto;">
+                💬 Kabarin aku di WhatsApp!
+            </button>
+        </a>
     </div>
 
     <script>
-        // --- 1. SET TRANSISI LOADING SCREEN ---
+        // --- 1. HANDLE LOADING SCREEN ---
         setTimeout(() => {
-            document.getElementById('screenLoading').classList.remove('active');
-            document.getElementById('screenQuestion').classList.add('active');
-        }, 2200);
+            document.getElementById('loadingScreen').classList.remove('active');
+            document.getElementById('questionScreen').classList.add('active');
+        }, 2000);
 
-        // --- 2. JEBAKAN TOMBOL "GAK/TIDAK" (MENGHINDAR) ---
-        const btnNo = document.getElementById('btnNo');
-        const btnGroup = document.getElementById('btnGroup');
-
-        function moveButton() {
-            // Dapatkan batas wadah tombol
-            const groupRect = btnGroup.getBoundingClientRect();
+        function nextScreen(nextId) {
+            const activeScreen = document.querySelector('.screen.active');
+            activeScreen.classList.remove('active');
             
-            // Tentukan jarak acak tombol agar tetap berada di area layar yang terlihat
-            const maxX = groupRect.width - btnNo.offsetWidth;
-            const maxY = 250; // Jangkauan vertikal maksimum tombol menghindar
-
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor((Math.random() * maxY) - (maxY / 2));
-
-            btnNo.style.left = `${randomX}px`;
-            btnNo.style.top = `${randomY}px`;
-        }
-
-        // Jalankan efek saat kursor mendekat (desktop) atau disentuh (mobile)
-        btnNo.addEventListener('mouseover', moveButton);
-        btnNo.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
-        btnNo.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
-
-        // --- 3. NAVIGASI ANTAR LAYAR ---
-        function nextScreen(screenId) {
-            document.querySelector('.screen.active').classList.remove('active');
-            document.getElementById(screenId).classList.add('active');
-
-            if(screenId === 'screenText') {
-                startTypingEffect();
-            }
-        }
-
-        // --- 4. BUKA AMPLOP ---
-        function openEnvelope() {
-            const envelope = document.getElementById('envelope');
-            envelope.classList.add('open');
-
-            // Pindah layar setelah animasi amplop terbuka selesai
             setTimeout(() => {
-                nextScreen('screenText');
-            }, 1600);
+                const nextScreenEl = document.getElementById(nextId);
+                nextScreenEl.classList.add('active');
+                
+                if(nextId === 'textScreen') {
+                    startTyping();
+                }
+            }, 300);
         }
 
-        // --- 5. EFEK MENGETIK ---
-        const messageText = "Hai... Lewat website kecil ini, aku cuma ingin menyampaikan sesuatu. Terima kasih banyak ya sudah bersedia meluangkan waktu sejenak untuk membuka pesan ini. Tolong dibaca pelan-pelan ya sampai akhir... ✨";
-        let typingIndex = 0;
-        const typingSpeed = 45; // mili-detik per karakter
+        // --- 2. JEBAKAN TOMBOL NGAMBEK 1 ---
+        function escapeButton(btnId) {
+            const btn = document.getElementById(btnId);
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth/2 - 60);
+            const y = Math.random() * (window.innerHeight - 100) - (window.innerHeight/2 - 50);
+            
+            btn.style.left = `${Math.min(Math.max(x, -100), 100)}px`;
+            btn.style.top = `${Math.min(Math.max(y, -150), 150)}px`;
+        }
 
-        function startTypingEffect() {
-            const typingContainer = document.getElementById('typingText');
+        // --- 3. JEBAKAN TOMBOL "GAK MAU" (MENGECIL + KABUR) ---
+        let scaleSize = 1.0;
+        function escapeApologyBtn() {
+            const btn = document.getElementById('apologyBtnNo');
+            scaleSize = Math.max(scaleSize - 0.15, 0.2); 
+            
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth/2 - 60);
+            const y = Math.random() * (window.innerHeight - 100) - (window.innerHeight/2 - 50);
+            
+            btn.style.transform = `scale(${scaleSize})`;
+            btn.style.left = `${Math.min(Math.max(x, -120), 120)}px`;
+            btn.style.top = `${Math.min(Math.max(y, -120), 120)}px`;
+        }
+
+        // --- 4. BUKA AMPLOP (FIXED & MULUS) ---
+        function openEnvelope() {
+            const envContainer = document.getElementById('envelope');
+            envContainer.classList.add('open');
+            
+            // Jeda sebelum pindah layar agar surat selesai meluncur ke atas
+            setTimeout(() => {
+                nextScreen('textScreen');
+            }, 1800);
+        }
+
+        // --- 5. TYPING EFFECT ---
+        const messageText = "Hai... Makasih ya udah mau ngebuka pesan ini. Lewat website sederhana ini, aku pengen nunjukin beberapa hal dan momen yang menurutku berharga banget. Disimak sampai habis ya... ✨";
+        let index = 0;
+        
+        function startTyping() {
+            const box = document.getElementById('typingBox');
             function type() {
-                if (typingIndex < messageText.length) {
-                    typingContainer.innerHTML += messageText.charAt(typingIndex);
-                    typingIndex++;
-                    setTimeout(type, typingSpeed);
+                if (index < messageText.length) {
+                    box.innerHTML += messageText.charAt(index);
+                    index++;
+                    setTimeout(type, 45);
                 } else {
                     document.getElementById('btnLanjut').style.display = 'inline-block';
                 }
@@ -533,73 +397,25 @@
 
         // --- 6. ENDING & CONFETTI ---
         function triggerEnding() {
-            nextScreen('screenEnd');
-            initConfetti();
+            nextScreen('endScreen');
+            createConfetti();
         }
 
-        // --- SISTEM EFEK CONFETTI ---
-        const canvas = document.getElementById('confettiCanvas');
-        const ctx = canvas.getContext('2d');
-        let confetti = [];
-        let animationFrameId;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-
-        class ConfettiParticle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height - canvas.height;
-                this.size = Math.random() * 8 + 4;
-                this.color = ['#ffb3c1', '#ff8fa3', '#e8f0fe', '#ffd166', '#a8dadc'][Math.floor(Math.random() * 5)];
-                this.speedX = Math.random() * 4 - 2;
-                this.speedY = Math.random() * 3 + 2;
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = Math.random() * 4 - 2;
+        function createConfetti() {
+            const colors = ['#ffb7b2', '#ff8fa3', '#e8f0fe', '#ffd166', '#a8dadc'];
+            for(let i = 0; i < 75; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.opacity = Math.random();
+                confetti.style.width = confetti.style.height = Math.random() * 8 + 5 + 'px';
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => { confetti.remove(); }, 4000);
             }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.rotation += this.rotationSpeed;
-
-                // Ulangi jatuh dari atas jika sudah di luar layar bawah
-                if (this.y > canvas.height) {
-                    this.y = -20;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate((this.rotation * Math.PI) / 180);
-                ctx.fillStyle = this.color;
-                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-                ctx.restore();
-            }
-        }
-
-        function initConfetti() {
-            resizeCanvas();
-            confetti = [];
-            for (let i = 0; i < 120; i++) {
-                confetti.push(new ConfettiParticle());
-            }
-            animateConfetti();
-        }
-
-        function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            confetti.forEach((particle) => {
-                particle.update();
-                particle.draw();
-            });
-            animationFrameId = requestAnimationFrame(animateConfetti);
         }
     </script>
 </body>
