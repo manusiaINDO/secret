@@ -11,6 +11,7 @@
         :root {
             --primary-pink: #ffb7b2;
             --dark-pink: #ff8fa3;
+            --shadow-pink: #f59da2;
             --pastel-blue: #e8f0fe;
             --bg-color: #fff5f5;
             --text-color: #5d5d5d;
@@ -70,7 +71,7 @@
             50% { transform: scale(1.3); }
         }
 
-        /* --- 2. QUESTION SCREEN (Awal) --- */
+        /* --- 2. QUESTION SCREEN --- */
         .btn-container {
             margin-top: 30px;
             position: relative;
@@ -97,15 +98,16 @@
             position: absolute;
         }
 
-        /* --- 3. ENVELOPE SCREEN (Perbaikan Bug Surat Bocor) --- */
+        /* --- 3. ENVELOPE SCREEN (TUTUP RAPAT SEMPURNA) --- */
         .envelope-container {
             position: relative;
             width: 300px;
             height: 200px;
             margin: 50px auto 0 auto;
             cursor: pointer;
-            perspective: 1000px;
         }
+        
+        /* Badan Amplop Utama */
         .envelope {
             position: absolute;
             bottom: 0;
@@ -115,21 +117,46 @@
             background-color: var(--primary-pink);
             border-radius: 0 0 10px 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-            z-index: 2; /* Menutupi surat saat di dalam */
+            z-index: 3; /* Berada di depan kertas surat sebelum diklik */
+            overflow: hidden;
         }
-        /* Tutup Amplop Segitiga */
+
+        /* Lipatan Kiri & Kanan Amplop (Efek 3D Dalam) */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid rgba(255, 255, 255, 0.15);
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            z-index: 4;
+        }
+        .envelope::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 0; height: 0;
+            border-right: 150px solid rgba(255, 255, 255, 0.2);
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            z-index: 4;
+        }
+
+        /* Tutup Atas Amplop Segitiga (Awalnya Menutup Rapat ke Bawah) */
         .flap {
             position: absolute;
             top: 0; left: 0;
             width: 0; height: 0;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
-            border-top: 110px solid #ffa39e;
+            border-top: 110px solid var(--shadow-pink);
             transform-origin: top;
             transition: transform 0.4s ease-in-out, z-index 0.3s;
-            z-index: 4; /* Berada paling depan menutupi semuanya */
+            z-index: 5; /* Paling depan menutupi isi di awal */
         }
-        /* Surat di dalam (Tersimpan rapi di bawah amplop) */
+
+        /* Kertas Surat Tersembunyi di Dalam */
         .letter {
             position: absolute;
             bottom: 10px; left: 15px;
@@ -138,21 +165,30 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 0 15px rgba(0,0,0,0.05);
-            z-index: 1; /* Di belakang badan amplop agar tidak kelihatan di awal */
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            z-index: 2; /* Berada di belakang badan amplop */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        /* Efek saat amplop diklik */
+
+        .letter p {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--dark-pink);
+            text-align: center;
+        }
+
+        /* ANIMASI BUKA AMPLOP */
+        /* 1. Tutup segitiga membuka ke atas */
         .envelope-container.open .flap {
             transform: rotateX(180deg);
-            z-index: 1; /* Saat membuka, lipatan pindah ke belakang */
+            z-index: 1; /* Pindah ke tumpukan paling belakang */
         }
+        /* 2. Surat didorong meluncur keluar ke atas */
         .envelope-container.open .letter {
-            transform: translateY(-130px);
-            z-index: 3; /* Surat meluncur naik melompati badan amplop */
+            transform: translateY(-145px);
+            z-index: 4; /* Pindah ke depan badan amplop */
         }
 
         /* --- 4. TYPING TEXT SCREEN --- */
@@ -209,7 +245,7 @@
             z-index: 10;
         }
 
-        /* --- APOLOGY SCREEN (Jebakan Tombol Maafan) --- */
+        /* --- APOLOGY SCREEN --- */
         #apologyBtnNo {
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -247,17 +283,16 @@
         </div>
     </div>
 
-    <!-- 3. ENVELOPE SCREEN (Buka Surat Mulus) -->
+    <!-- 3. ENVELOPE SCREEN (Tertutup Rapat & Misterius) -->
     <div class="screen" id="envelopeScreen">
         <h2>Surat khusus buat kamu... 💌</h2>
-        <p style="color: #999; font-size: 0.9rem; margin-top: 5px;">Ketuk amplopnya untuk mengeluarkan isinya</p>
+        <p style="color: #999; font-size: 0.9rem; margin-top: 5px; margin-bottom: 30px;">Ketuk amplop di bawah ini untuk membukanya</p>
         
         <div class="envelope-container" id="envelope" onclick="openEnvelope()">
             <div class="flap"></div>
             <div class="envelope"></div>
             <div class="letter">
-                <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--dark-pink); text-align: center;">Sent with Love ✨</p>
-                <p style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">Tap untuk membaca</p>
+                <p>Sent with Love ✨</p>
             </div>
         </div>
     </div>
@@ -293,7 +328,7 @@
         <button class="btn btn-yes" style="margin: 30px 0;" onclick="nextScreen('apologyScreen')">Selesai Lihat ➡️</button>
     </div>
 
-    <!-- 6. APOLOGY SCREEN (Jebakan Baru: Maafan) -->
+    <!-- 6. APOLOGY SCREEN (Jebakan Maafan) -->
     <div class="screen" id="apologyScreen">
         <h2 style="font-size: 1.8rem; color: var(--dark-pink);">Terima Kasih & Maaf Ya... 🙏</h2>
         <p style="margin: 15px 0; line-height: 1.6; color: #666;">
@@ -366,15 +401,16 @@
             btn.style.top = `${Math.min(Math.max(y, -120), 120)}px`;
         }
 
-        // --- 4. BUKA AMPLOP (FIXED & MULUS) ---
+        // --- 4. BUKA AMPLOP (REALISTIS & MULUS) ---
         function openEnvelope() {
             const envContainer = document.getElementById('envelope');
             envContainer.classList.add('open');
             
-            // Jeda sebelum pindah layar agar surat selesai meluncur ke atas
+            // Jeda 1.8 detik agar animasi membuka penutup amplop 
+            // dan luncuran surat selesai berputar dengan elegan
             setTimeout(() => {
                 nextScreen('textScreen');
-            }, 1800);
+            }, 2000);
         }
 
         // --- 5. TYPING EFFECT ---
