@@ -34,6 +34,34 @@
             overflow-x: hidden;
         }
 
+        /* Tombol Musik di Pojok Kanan Atas */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid var(--primary-pink);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .music-btn.playing {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
         /* Container Transisi Antar Layar */
         .screen {
             display: none;
@@ -72,7 +100,6 @@
         }
 
         /* --- 2. QUESTION SCREEN --- */
-        /* Perbaikan layout tombol agar bersebelahan rapi di semua layar HP */
         .btn-container {
             margin-top: 30px;
             position: relative;
@@ -81,7 +108,7 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            min-height: 80px; /* Memberi ruang gerak tombol */
+            min-height: 80px;
         }
         .btn {
             padding: 12px 24px;
@@ -103,7 +130,7 @@
             background-color: #e0e0e0; 
             color: #777; 
             z-index: 3;
-            position: relative; /* Diubah dari absolute ke relative agar tidak menumpuk saat awal dimuat */
+            position: relative;
         }
 
         /* --- 3. ENVELOPE SCREEN --- */
@@ -212,7 +239,7 @@
             background: white;
             padding: 12px 12px 25px 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            max-width: 260px;
+            max-width: 270px;
             width: 100%;
             margin: 0 auto;
             border: 1px solid #eee;
@@ -220,9 +247,12 @@
         }
         .polaroid img {
             width: 100%;
-            height: 190px;
+            height: 330px;
             object-fit: cover;
             border-radius: 4px;
+        }
+        .polaroid-landscape img {
+            height: 190px !important;
         }
         .polaroid-caption {
             font-family: 'Caveat', cursive;
@@ -233,6 +263,7 @@
         .polaroid:nth-child(1) { transform: rotate(-3deg); }
         .polaroid:nth-child(2) { transform: rotate(3deg); }
         .polaroid:nth-child(3) { transform: rotate(-2deg); }
+        .polaroid:nth-child(4) { transform: rotate(4deg); }
 
         .polaroid:hover {
             transform: scale(1.05) rotate(0deg) !important;
@@ -264,6 +295,24 @@
             border-color: var(--dark-pink);
         }
 
+        /* Notifikasi Peringatan Kustom */
+        .alert-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 10001;
+            text-align: center;
+            width: 80%;
+            max-width: 320px;
+            border: 2px solid var(--primary-pink);
+        }
+
         /* --- CONFETTI --- */
         .confetti {
             position: fixed;
@@ -279,6 +328,20 @@
 </head>
 <body>
 
+    <!-- Tombol Audio Estetik -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+    
+    <!-- AUDIO: Canon in D (Piano Version) -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Kotak Notifikasi Imut -->
+    <div id="customAlert" class="alert-box">
+        <p style="font-size: 1rem; font-weight: 600; color: #5d5d5d; margin-bottom: 15px;">Ketik sesuatu dulu ya sebelum mengirim! 😉👉👈</p>
+        <button class="btn btn-yes" onclick="closeAlert()" style="padding: 8px 20px; font-size: 0.85rem;">Oke!</button>
+    </div>
+
     <!-- 1. LOADING SCREEN -->
     <div class="screen active" id="loadingScreen">
         <div class="heart-loader">❤️</div>
@@ -293,7 +356,6 @@
         
         <div class="btn-container">
             <button class="btn btn-yes" onclick="nextScreen('envelopeScreen')">Iya sedikit / Gak tahu</button>
-            <!-- Di HP: touchstart menggantikan mouseover agar langsung kabur begitu disentuh layar sentuh -->
             <button class="btn btn-no" id="btnNo" onmouseover="escapeButton('btnNo')" ontouchstart="escapeButton('btnNo')" onclick="escapeButton('btnNo')">Nggakk 😜</button>
         </div>
     </div>
@@ -324,19 +386,28 @@
         <p style="color: #999; font-size: 0.9rem; margin-bottom: 25px;">Ingat momen-momen ini gak?</p>
         
         <div class="polaroid-gallery">
-            <div class="polaroid">
-                <img src="https://picsum.photos/300/250?random=11" alt="Momen 1">
-                <div class="polaroid-caption">Waktu itu seru banget! 🍕</div>
+            <!-- Momen 1: Saat menjadi Ibuk Ursa -->
+            <div class="polaroid polaroid-landscape">
+                <img src="IMG-20250327-WA0056.jpg" alt="Saat Menjadi Ibuk Ursa">
+                <div class="polaroid-caption">Saat menjadi Ibuk Ursa 🐻</div>
             </div>
 
+            <!-- Momen 2: Saat kita beradvantur -->
             <div class="polaroid">
-                <img src="https://picsum.photos/300/250?random=12" alt="Momen 2">
-                <div class="polaroid-caption">Ketawa terus bareng kamu 🌸</div>
+                <img src="IMG-20260707-WA0029.jpg" alt="Saat Kita Beradvantur">
+                <div class="polaroid-caption">Saat kita beradvantur 🎒✨</div>
             </div>
 
+            <!-- Momen 3: Saat kita bersenang-senang -->
             <div class="polaroid">
-                <img src="https://picsum.photos/300/250?random=13" alt="Momen 3">
-                <div class="polaroid-caption">Hari yang sangat berharga ☀️</div>
+                <img src="IMG-20260713-WA0007.jpg" alt="Saat Kita Bersenang-senang">
+                <div class="polaroid-caption">Saat kita bersenang-senang 🎉</div>
+            </div>
+
+            <!-- Momen 4: Saat anda ngambek dan aegyo -->
+            <div class="polaroid">
+                <img src="301c1408-8119-11f1-8da2-fff753a47542Tv7qfRh5qYFShk0.jpg" alt="Saat Anda Ngambek dan Aegyo">
+                <div class="polaroid-caption">Saat anda ngambek & aegyo 🥺🎀</div>
             </div>
         </div>
 
@@ -372,6 +443,48 @@
     </div>
 
     <script>
+        // --- HANDLE SISTEM MUSIK ---
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let hasInteracted = false;
+
+        function playMusic() {
+            music.play().then(() => {
+                musicBtn.classList.add('playing');
+                musicBtn.innerText = '🎵';
+            }).catch(err => {
+                console.log("Autoplay ditolak browser. Musik menyala setelah ketukan pertama.");
+            });
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.classList.add('playing');
+                musicBtn.innerText = '🎵';
+            } else {
+                music.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerText = '🔇';
+            }
+        }
+
+        // Pemicu musik otomatis saat interaksi pertama
+        document.body.addEventListener('click', () => {
+            if (!hasInteracted) {
+                playMusic();
+                hasInteracted = true;
+            }
+        }, { once: true });
+
+        document.body.addEventListener('touchstart', () => {
+            if (!hasInteracted) {
+                playMusic();
+                hasInteracted = true;
+            }
+        }, { once: true });
+
+
         // --- 1. HANDLE LOADING SCREEN ---
         setTimeout(() => {
             document.getElementById('loadingScreen').classList.remove('active');
@@ -396,12 +509,10 @@
         function escapeButton(btnId) {
             const btn = document.getElementById(btnId);
             
-            // Ubah ke absolute hanya saat pertama kali berinteraksi (menghindari penumpukan di awal)
             if (btn.style.position !== 'absolute') {
                 btn.style.position = 'absolute';
             }
             
-            // Mengatur area acak yang aman di sekitar kontainer layar HP
             const x = Math.random() * (window.innerWidth - 150) - (window.innerWidth/2 - 75);
             const y = Math.random() * (window.innerHeight - 200) - (window.innerHeight/2 - 100);
             
@@ -462,12 +573,12 @@
             createConfetti();
         }
 
-        // --- 7. FUNGSI KIRIM PESAN KE WHATSAPP ---
+        // --- 7. FUNGSI KIRIM PESAN KE WHATSAPP & CUSTOM ALERT ---
         function sendToWhatsApp() {
             const pesanDia = document.getElementById('userMessage').value;
             
             if (pesanDia.trim() === "") {
-                alert("Ketik sesuatu dulu ya sebelum mengirim! 😉");
+                document.getElementById('customAlert').style.display = 'block';
                 return;
             }
 
@@ -475,6 +586,10 @@
             const teksFormat = encodeURIComponent(`Hai! Ini balasan aku setelah baca websitemu:\n\n"${pesanDia}"\n\n❤️`);
             
             window.open(`https://wa.me/${nomorWA}?text=${teksFormat}`, '_blank');
+        }
+
+        function closeAlert() {
+            document.getElementById('customAlert').style.display = 'none';
         }
 
         function createConfetti() {
