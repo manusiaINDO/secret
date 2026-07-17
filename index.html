@@ -41,7 +41,7 @@
             right: 20px;
             width: 45px;
             height: 45px;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             border: 2px solid var(--primary-pink);
             border-radius: 50%;
             display: flex;
@@ -227,24 +227,26 @@
             border: 2px solid #fff;
         }
 
-        /* --- 5. TIMELINE & FOTO POLAROID SERANGKAIAN --- */
+        /* --- 5. TIMELINE & FOTO POLAROID ZIGZAG --- */
         .polaroid-gallery {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 35px; /* Jarak antar polaroid dibuat lebih lapang */
             width: 100%;
-            margin: 20px 0;
+            margin: 30px 0;
+            padding: 10px;
         }
+        
         .polaroid {
             background: white;
             padding: 12px 12px 25px 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            max-width: 270px;
-            width: 100%;
-            margin: 0 auto;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            max-width: 280px;
+            width: 90%;
             border: 1px solid #eee;
             transition: transform 0.3s ease;
         }
+        
         .polaroid img {
             width: 100%;
             height: 330px;
@@ -253,21 +255,29 @@
             display: block;
         }
         
-        /* Modifikasi khusus polaroid pertama biar proporsional landscape */
+        /* Layout Zig-Zag: bergantian geser kiri dan kanan */
+        .polaroid.left-align {
+            align-self: flex-start;
+            transform: rotate(-4deg);
+        }
+        
+        .polaroid.right-align {
+            align-self: flex-end;
+            transform: rotate(4deg);
+        }
+
+        /* Gaya polaroid landscape khusus gambar pertama agar proporsional */
         .polaroid.polaroid-landscape img {
-            height: 190px !important;
+            height: 200px !important;
+            object-fit: cover;
         }
         
         .polaroid-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-top: 12px;
             color: #444;
         }
-        .polaroid:nth-child(1) { transform: rotate(-3deg); }
-        .polaroid:nth-child(2) { transform: rotate(3deg); }
-        .polaroid:nth-child(3) { transform: rotate(-2deg); }
-        .polaroid:nth-child(4) { transform: rotate(4deg); }
 
         .polaroid:hover {
             transform: scale(1.05) rotate(0deg) !important;
@@ -335,9 +345,10 @@
     <!-- Tombol Audio Estetik -->
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
     
-    <!-- AUDIO: Canon in D Murni Estetik (Kevin MacLeod) -->
-    <audio id="bgMusic" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-flat-626.mp3" type="audio/mpeg">
+    <!-- AUDIO: Instrumen Piano Klasik Romantis Tanpa Lag -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptrackid=255743" type="audio/mpeg">
     </audio>
 
     <!-- Kotak Notifikasi Imut -->
@@ -384,38 +395,38 @@
         <button class="btn btn-yes" id="btnLanjut" style="margin-top: 30px; display: none;" onclick="nextScreen('timelineScreen')">Lihat Momen Kita 💖</button>
     </div>
 
-    <!-- 5. TIMELINE & FOTO SERANGKAIAN (LENGKAP 4 FOTO) -->
+    <!-- 5. TIMELINE & FOTO SERANGKAIAN (LENGKAP 4 FOTO - STRUKTUR ZIGZAG) -->
     <div class="screen" id="timelineScreen" style="justify-content: flex-start; overflow-y: auto;">
-        <h2 style="color: var(--dark-pink); margin-bottom: 5px;">Our Moments ✨</h2>
-        <p style="color: #999; font-size: 0.9rem; margin-bottom: 25px;">Ingat momen-momen ini gak?</p>
+        <h2 style="color: var(--dark-pink); margin-top: 10px; margin-bottom: 5px;">Our Moments ✨</h2>
+        <p style="color: #999; font-size: 0.9rem; margin-bottom: 10px;">Ingat momen-momen ini gak?</p>
         
         <div class="polaroid-gallery">
-            <!-- Momen 1: Saat menjadi Ibuk Ursa -->
-            <div class="polaroid polaroid-landscape">
-                <img src="IMG-20250327-WA0056.jpg" alt="Saat Menjadi Ibuk Ursa">
+            <!-- Momen 1: Saat menjadi Ibuk Ursa (Kiri) -->
+            <div class="polaroid left-align polaroid-landscape">
+                <img src="IMG-20250327-WA0056.jpg" alt="Saat Menjadi Ibuk Ursa" onerror="this.src='https://placehold.co/400x300/ffeeff/ff8fa3?text=Ibuk+Ursa+🐻'">
                 <div class="polaroid-caption">Saat menjadi Ibuk Ursa 🐻</div>
             </div>
 
-            <!-- Momen 2: Saat kita beradvantur -->
-            <div class="polaroid">
-                <img src="IMG-20260707-WA0029.jpg" alt="Saat Kita Beradvantur">
+            <!-- Momen 2: Saat kita beradvantur (Kanan) -->
+            <div class="polaroid right-align">
+                <img src="IMG-20260707-WA0029.jpg" alt="Saat Kita Beradvantur" onerror="this.src='https://placehold.co/300x400/ffeeff/ff8fa3?text=Beradventure+🎒'">
                 <div class="polaroid-caption">Saat kita beradvantur 🎒✨</div>
             </div>
 
-            <!-- Momen 3: Saat kita bersenang-senang -->
-            <div class="polaroid">
-                <img src="IMG-20260713-WA0007.jpg" alt="Saat Kita Bersenang-senang">
+            <!-- Momen 3: Saat kita bersenang-senang (Kiri) -->
+            <div class="polaroid left-align">
+                <img src="IMG-20260713-WA0007.jpg" alt="Saat Kita Bersenang-senang" onerror="this.src='https://placehold.co/300x400/ffeeff/ff8fa3?text=Bersenang-senang+🎉'">
                 <div class="polaroid-caption">Saat kita bersenang-senang 🎉</div>
             </div>
 
-            <!-- Momen 4: Saat anda ngambek dan aegyo -->
-            <div class="polaroid">
-                <img src="301c1408-8119-11f1-8da2-fff753a47542Tv7qfRh5qYFShk0.jpg" alt="Saat Anda Ngambek dan Aegyo">
+            <!-- Momen 4: Saat anda ngambek dan aegyo (Kanan) -->
+            <div class="polaroid right-align">
+                <img src="301c1408-8119-11f1-8da2-fff753a47542Tv7qfRh5qYFShk0.jpg" alt="Saat Anda Ngambek dan Aegyo" onerror="this.src='https://placehold.co/300x400/ffeeff/ff8fa3?text=Ngambek+%26+Aegyo+🥺'">
                 <div class="polaroid-caption">Saat anda ngambek & aegyo 🥺🎀</div>
             </div>
         </div>
 
-        <button class="btn btn-yes" style="margin: 30px 0;" onclick="nextScreen('apologyScreen')">Selesai Lihat ➡️</button>
+        <button class="btn btn-yes" style="margin: 30px 0 50px 0; width: 80%;" onclick="nextScreen('apologyScreen')">Selesai Lihat ➡️</button>
     </div>
 
     <!-- 6. APOLOGY SCREEN -->
@@ -452,6 +463,9 @@
         const musicBtn = document.getElementById('musicBtn');
         let hasInteracted = false;
 
+        // Memastikan volume suara pas dan enak didengar
+        music.volume = 0.6;
+
         function playMusic() {
             music.play().then(() => {
                 musicBtn.classList.add('playing');
@@ -473,15 +487,15 @@
             }
         }
 
-        // Pemicu musik otomatis saat interaksi pertama
-        document.body.addEventListener('click', () => {
+        // Pemicu musik otomatis begitu ada sentuhan/ketukan pertama di layar mana saja
+        document.addEventListener('click', () => {
             if (!hasInteracted) {
                 playMusic();
                 hasInteracted = true;
             }
         }, { once: true });
 
-        document.body.addEventListener('touchstart', () => {
+        document.addEventListener('touchstart', () => {
             if (!hasInteracted) {
                 playMusic();
                 hasInteracted = true;
@@ -497,7 +511,9 @@
 
         function nextScreen(nextId) {
             const activeScreen = document.querySelector('.screen.active');
-            activeScreen.classList.remove('active');
+            if(activeScreen) {
+                activeScreen.classList.remove('active');
+            }
             
             setTimeout(() => {
                 const nextScreenEl = document.getElementById(nextId);
@@ -550,7 +566,7 @@
             
             setTimeout(() => {
                 nextScreen('textScreen');
-            }, 2000);
+            }, 1800);
         }
 
         // --- 5. TYPING EFFECT ---
@@ -559,6 +575,7 @@
         
         function startTyping() {
             const box = document.getElementById('typingBox');
+            box.innerHTML = ""; // reset agar bersih
             function type() {
                 if (index < messageText.length) {
                     box.innerHTML += messageText.charAt(index);
