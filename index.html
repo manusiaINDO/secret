@@ -98,7 +98,7 @@
             position: absolute;
         }
 
-        /* --- 3. ENVELOPE SCREEN (TUTUP RAPAT SEMPURNA) --- */
+        /* --- 3. ENVELOPE SCREEN --- */
         .envelope-container {
             position: relative;
             width: 300px;
@@ -106,8 +106,6 @@
             margin: 50px auto 0 auto;
             cursor: pointer;
         }
-        
-        /* Badan Amplop Utama */
         .envelope {
             position: absolute;
             bottom: 0;
@@ -117,11 +115,9 @@
             background-color: var(--primary-pink);
             border-radius: 0 0 10px 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-            z-index: 3; /* Berada di depan kertas surat sebelum diklik */
+            z-index: 3;
             overflow: hidden;
         }
-
-        /* Lipatan Kiri & Kanan Amplop (Efek 3D Dalam) */
         .envelope::before {
             content: '';
             position: absolute;
@@ -142,8 +138,6 @@
             border-bottom: 100px solid transparent;
             z-index: 4;
         }
-
-        /* Tutup Atas Amplop Segitiga (Awalnya Menutup Rapat ke Bawah) */
         .flap {
             position: absolute;
             top: 0; left: 0;
@@ -153,10 +147,8 @@
             border-top: 110px solid var(--shadow-pink);
             transform-origin: top;
             transition: transform 0.4s ease-in-out, z-index 0.3s;
-            z-index: 5; /* Paling depan menutupi isi di awal */
+            z-index: 5;
         }
-
-        /* Kertas Surat Tersembunyi di Dalam */
         .letter {
             position: absolute;
             bottom: 10px; left: 15px;
@@ -165,30 +157,25 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 0 15px rgba(0,0,0,0.05);
-            z-index: 2; /* Berada di belakang badan amplop */
+            z-index: 2;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15);
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .letter p {
             font-family: 'Caveat', cursive;
             font-size: 2rem;
             color: var(--dark-pink);
             text-align: center;
         }
-
-        /* ANIMASI BUKA AMPLOP */
-        /* 1. Tutup segitiga membuka ke atas */
         .envelope-container.open .flap {
             transform: rotateX(180deg);
-            z-index: 1; /* Pindah ke tumpukan paling belakang */
+            z-index: 1;
         }
-        /* 2. Surat didorong meluncur keluar ke atas */
         .envelope-container.open .letter {
             transform: translateY(-145px);
-            z-index: 4; /* Pindah ke depan badan amplop */
+            z-index: 4;
         }
 
         /* --- 4. TYPING TEXT SCREEN --- */
@@ -235,7 +222,6 @@
             margin-top: 12px;
             color: #444;
         }
-        /* Posisi miring estetik berselang-seling */
         .polaroid:nth-child(1) { transform: rotate(-3deg); }
         .polaroid:nth-child(2) { transform: rotate(3deg); }
         .polaroid:nth-child(3) { transform: rotate(-2deg); }
@@ -248,6 +234,31 @@
         /* --- APOLOGY SCREEN --- */
         #apologyBtnNo {
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- 7. THE END SCREEN (Fitur Input Pesan Baru) --- */
+        .input-box-container {
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        .custom-textarea {
+            width: 100%;
+            height: 110px;
+            padding: 15px;
+            border: 2px solid #ffe5e5;
+            border-radius: 12px;
+            resize: none;
+            font-size: 1rem;
+            color: #555;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .custom-textarea:focus {
+            border-color: var(--dark-pink);
         }
 
         /* --- CONFETTI --- */
@@ -271,7 +282,7 @@
         <p style="margin-top: 15px; font-weight: 600; letter-spacing: 1px;">Sabar ya, lagi loading...</p>
     </div>
 
-    <!-- 2. QUESTION SCREEN (Masih Ngambek?) -->
+    <!-- 2. QUESTION SCREEN -->
     <div class="screen" id="questionScreen">
         <h2 style="font-size: 1.8rem; color: var(--dark-pink);">✨ Ada Sesuatu Menunggumu...</h2>
         <p style="margin-top: 10px; color: #888;">Tapi sebelum lanjut, jawab jujur ya...</p>
@@ -283,7 +294,7 @@
         </div>
     </div>
 
-    <!-- 3. ENVELOPE SCREEN (Tertutup Rapat & Misterius) -->
+    <!-- 3. ENVELOPE SCREEN -->
     <div class="screen" id="envelopeScreen">
         <h2>Surat khusus buat kamu... 💌</h2>
         <p style="color: #999; font-size: 0.9rem; margin-top: 5px; margin-bottom: 30px;">Ketuk amplop di bawah ini untuk membukanya</p>
@@ -328,7 +339,7 @@
         <button class="btn btn-yes" style="margin: 30px 0;" onclick="nextScreen('apologyScreen')">Selesai Lihat ➡️</button>
     </div>
 
-    <!-- 6. APOLOGY SCREEN (Jebakan Maafan) -->
+    <!-- 6. APOLOGY SCREEN -->
     <div class="screen" id="apologyScreen">
         <h2 style="font-size: 1.8rem; color: var(--dark-pink);">Terima Kasih & Maaf Ya... 🙏</h2>
         <p style="margin: 15px 0; line-height: 1.6; color: #666;">
@@ -342,18 +353,18 @@
         </div>
     </div>
 
-    <!-- 7. THE END SCREEN -->
+    <!-- 7. THE END SCREEN (Ketik langsung di web!) -->
     <div class="screen" id="endScreen">
         <h1 style="font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--dark-pink);">The End ❤️</h1>
-        <p style="margin: 15px 0 30px 0; max-width: 320px; line-height: 1.6;">
-            Yeayyy! Makasih banyak udah dimaafin! Aku janji gak bakal kabur-kaburan lagi kok 😂
-        </p>
+        <p style="margin-top: 10px; color: #666;">Yeayyy! Makasih banyak udah dimaafin!</p>
+        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">Tulis tanggapan atau pesan kamu di bawah ini ya:</p>
         
-        <a href="https://wa.me/628123456789?text=Aku%20udah%20baca%20websitenya!%20Udah%20aku%20maafin%20kok%20haha%20❤️" target="_blank" style="text-decoration: none;">
-            <button class="btn" style="background-color: #25D366; color: white; display: flex; align-items: center; gap: 8px; margin: 0 auto;">
-                💬 Kabarin aku di WhatsApp!
+        <div class="input-box-container">
+            <textarea class="custom-textarea" id="userMessage" placeholder="Ketik pesan balasanmu di sini... ✨"></textarea>
+            <button class="btn" style="background-color: #25D366; color: white; width: 100%; margin-top: 15px;" onclick="sendToWhatsApp()">
+                Send to WhatsApp 💬
             </button>
-        </a>
+        </div>
     </div>
 
     <script>
@@ -387,7 +398,7 @@
             btn.style.top = `${Math.min(Math.max(y, -150), 150)}px`;
         }
 
-        // --- 3. JEBAKAN TOMBOL "GAK MAU" (MENGECIL + KABUR) ---
+        // --- 3. JEBAKAN TOMBOL "GAK MAU" ---
         let scaleSize = 1.0;
         function escapeApologyBtn() {
             const btn = document.getElementById('apologyBtnNo');
@@ -401,13 +412,11 @@
             btn.style.top = `${Math.min(Math.max(y, -120), 120)}px`;
         }
 
-        // --- 4. BUKA AMPLOP (REALISTIS & MULUS) ---
+        // --- 4. BUKA AMPLOP ---
         function openEnvelope() {
             const envContainer = document.getElementById('envelope');
             envContainer.classList.add('open');
             
-            // Jeda 1.8 detik agar animasi membuka penutup amplop 
-            // dan luncuran surat selesai berputar dengan elegan
             setTimeout(() => {
                 nextScreen('textScreen');
             }, 2000);
@@ -435,6 +444,24 @@
         function triggerEnding() {
             nextScreen('endScreen');
             createConfetti();
+        }
+
+        // --- 7. FUNGSI KIRIM PESAN KE WHATSAPP (NOMOR DIUPDATE) ---
+        function sendToWhatsApp() {
+            const pesanDia = document.getElementById('userMessage').value;
+            
+            if (pesanDia.trim() === "") {
+                alert("Ketik sesuatu dulu ya sebelum mengirim! 😉");
+                return;
+            }
+
+            // Nomor WhatsApp kamu sudah terpasang otomatis!
+            const nomorWA = "62895359274080"; 
+
+            // Format pesan yang dikirim
+            const teksFormat = encodeURIComponent(`Hai! Ini balasan aku setelah baca websitemu:\n\n"${pesanDia}"\n\n❤️`);
+            
+            window.open(`https://wa.me/${nomorWA}?text=${teksFormat}`, '_blank');
         }
 
         function createConfetti() {
