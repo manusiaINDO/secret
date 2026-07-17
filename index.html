@@ -250,10 +250,14 @@
             height: 330px;
             object-fit: cover;
             border-radius: 4px;
+            display: block;
         }
-        .polaroid-landscape img {
+        
+        /* Modifikasi khusus polaroid pertama biar proporsional landscape */
+        .polaroid.polaroid-landscape img {
             height: 190px !important;
         }
+        
         .polaroid-caption {
             font-family: 'Caveat', cursive;
             font-size: 1.5rem;
@@ -331,9 +335,9 @@
     <!-- Tombol Audio Estetik -->
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
     
-    <!-- AUDIO: Canon in D (Pachelbel) Piano & Cello Version -->
+    <!-- AUDIO: Canon in D Murni Estetik (Kevin MacLeod) -->
     <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-flat-626.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Kotak Notifikasi Imut -->
