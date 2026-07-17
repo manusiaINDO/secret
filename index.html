@@ -30,8 +30,9 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Mengubah ke flex-start agar halaman panjang bisa di-scroll dengan mulus */
             overflow-x: hidden;
+            overflow-y: auto;
         }
 
         /* Tombol Musik di Pojok Kanan Atas */
@@ -79,8 +80,10 @@
             transform: translateY(20px);
         }
 
+        /* FIX UTAMA: Mengubah position menjadi relative agar tinggi layar dinamis & bisa di-scroll kebawah */
         .screen.active {
-            display: flex !important; /* Memaksa layar aktif untuk muncul tanpa hambatan CSS */
+            display: flex !important;
+            position: relative !important; 
             opacity: 1;
             transform: translateY(0);
         }
@@ -89,6 +92,12 @@
         #loadingScreen {
             background-color: var(--bg-color);
             z-index: 999;
+            position: fixed; /* Tetap melayang penuh di awal loading */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            max-width: 100%;
         }
         .heart-loader {
             font-size: 3.5rem;
@@ -227,19 +236,17 @@
             border: 2px solid #fff;
         }
 
-        /* --- 5. TIMELINE & FOTO POLAROID ZIGZAG (DIPERBAIKI) --- */
+        /* --- 5. TIMELINE & FOTO POLAROID ZIGZAG --- */
         #timelineScreen {
-            height: auto; 
-            min-height: 100vh;
-            overflow-y: auto; 
-            padding-top: 50px; 
-            padding-bottom: 50px;
+            justify-content: flex-start; /* Memulai konten dari atas agar alami saat di-scroll */
+            padding-top: 40px; 
+            padding-bottom: 60px;
         }
         
         .polaroid-gallery {
             display: flex;
             flex-direction: column;
-            gap: 40px; 
+            gap: 35px; 
             width: 100%;
             margin: 30px 0;
             padding: 10px;
@@ -403,7 +410,7 @@
     </div>
 
     <!-- 5. TIMELINE & FOTO SERANGKAIAN (LENGKAP 4 FOTO - STRUKTUR ZIGZAG SEGAR) -->
-    <div class="screen" id="timelineScreen" style="justify-content: flex-start;">
+    <div class="screen" id="timelineScreen">
         <h2 style="color: var(--dark-pink); margin-bottom: 5px;">Our Moments ✨</h2>
         <p style="color: #999; font-size: 0.9rem; margin-bottom: 10px;">Ingat momen-momen ini gak?</p>
         
@@ -527,8 +534,7 @@
                 nextScreenEl.classList.add('active');
                 
                 // Menggulung layar kembali ke bagian paling atas saat berpindah halaman
-                window.scrollTo(0, 0);
-                nextScreenEl.scrollTop = 0;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 
                 if(nextId === 'textScreen') {
                     startTyping();
