@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Untuk Kamu ✨</title>
+    <title>Untuk Ms. Nana ✨</title>
     <!-- Google Fonts untuk kesan aesthetic & cute -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
     
@@ -225,15 +225,16 @@
         /* --- 4. TYPING TEXT SCREEN --- */
         .text-box {
             background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
+            padding: 25px;
             border-radius: 24px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             width: 100%;
-            min-height: 180px;
+            min-height: 250px;
             text-align: left;
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: 1rem;
+            line-height: 1.6;
             border: 2px solid #fff;
+            white-space: pre-line; /* Agar line break (\n) di javascript terbaca rapi */
         }
 
         /* --- 5. TIMELINE & FOTO POLAROID ZIGZAG --- */
@@ -367,7 +368,7 @@
 
     <!-- Kotak Notifikasi Imut -->
     <div id="customAlert" class="alert-box">
-        <p style="font-size: 1rem; font-weight: 600; color: #5d5d5d; margin-bottom: 15px;">Ketik apa kek jgn so kul! 😉👉👈</p>
+        <p style="font-size: 1rem; font-weight: 600; color: #5d5d5d; margin-bottom: 15px;">Ketik sesuatu dulu ya sebelum mengirim! 😉👉👈</p>
         <button class="btn btn-yes" onclick="closeAlert()" style="padding: 8px 20px; font-size: 0.85rem;">Oke!</button>
     </div>
 
@@ -381,24 +382,24 @@
     <div class="screen" id="questionScreen">
         <h2 style="font-size: 1.8rem; color: var(--dark-pink);">✨ Ada Sesuatu Menunggumu...</h2>
         <p style="margin-top: 10px; color: #888;">Tapi sebelum lanjut, jawab jujur ya...</p>
-        <h3 style="margin-top: 30px; font-size: 1.3rem;">Ms ar u ngambek XD ? 🥺</h3>
+        <h3 style="margin-top: 30px; font-size: 1.3rem;">Ms. Nana sekarang lagi ngambek ya? XD 🥺</h3>
         
         <div class="btn-container">
-            <button class="btn btn-yes" onclick="nextScreen('envelopeScreen')">Iya many many</button>
-            <button class="btn btn-no" id="btnNo" onmouseover="escapeButton('btnNo')" ontouchstart="escapeButton('btnNo')" onclick="escapeButton('btnNo')">Nggakk 😜</button>
+            <button class="btn btn-yes" onclick="nextScreen('envelopeScreen')">Iya dikit / Gak tahu 😜</button>
+            <button class="btn btn-no" id="btnNo" onmouseover="escapeButton('btnNo')" ontouchstart="escapeButton('btnNo')" onclick="escapeButton('btnNo')">Nggakk 🥺👉👈</button>
         </div>
     </div>
 
     <!-- 3. ENVELOPE SCREEN -->
     <div class="screen" id="envelopeScreen">
-        <h2>Surat khusus buat kamu... 💌</h2>
+        <h2>Surat khusus buat Ms. Nana... 💌</h2>
         <p style="color: #999; font-size: 0.9rem; margin-top: 5px; margin-bottom: 30px;">Ketuk amplop di bawah ini untuk membukanya</p>
         
         <div class="envelope-container" id="envelope" onclick="openEnvelope()">
             <div class="flap"></div>
             <div class="envelope"></div>
             <div class="letter">
-                <p>Sent with brain ✨</p>
+                <p>Sent with Love ✨</p>
             </div>
         </div>
     </div>
@@ -445,28 +446,28 @@
 
     <!-- 6. APOLOGY SCREEN -->
     <div class="screen" id="apologyScreen">
-        <h2 style="font-size: 1.8rem; color: var(--dark-pink);">Terima Kasih & Maaf Ya... 🙏</h2>
-        <p style="margin: 15px 0; line-height: 1.6; color: #666;">
-            Makasih banyak udah mau ngelihat foto-foto tadi. Aku mau minta maaf sedalam-dalamnya kalau akhir-akhir ini bikin kamu kesel atau ngerasa gak nyaman...
+        <h2 style="font-size: 1.8rem; color: var(--dark-pink);">Makasih Banyak Ya... 🙏</h2>
+        <p style="margin: 15px 0; line-height: 1.6; color: #666; font-size: 1.05rem;">
+            Makasih Ms udah mau ngelihat foto-foto tadi. Aku mau minta maaf sedalam-dalamnya kalau akhir-akhir ini bikin Ms kesel... tapi Ms juga ngeselin :V 😜
         </p>
-        <h3 style="margin-top: 25px; font-size: 1.25rem;">Kamu mau kan maafin aku? 🥺👉👈</h3>
+        <h3 style="margin-top: 25px; font-size: 1.25rem;">Ms maapin aja g si? 🥺👉👈</h3>
 
         <div class="btn-container" style="margin-top: 35px;">
-            <button class="btn btn-yes" onclick="triggerEnding()">Maafin! 🥰</button>
+            <button class="btn btn-yes" onclick="triggerEnding()">Maafin deh! 🥰</button>
             <button class="btn btn-no" id="apologyBtnNo" onmouseover="escapeApologyBtn()" ontouchstart="escapeApologyBtn()" onclick="escapeApologyBtn()">Gak Mau! 😜</button>
         </div>
     </div>
 
     <!-- 7. THE END SCREEN -->
     <div class="screen" id="endScreen">
-        <h1 style="font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--dark-pink);">The End ❤️</h1>
-        <p style="margin-top: 10px; color: #666;">Yeayyy! Makasih banyak udah dimaafin!</p>
-        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">Tulis tanggapan atau pesan kamu di bawah ini ya:</p>
+        <h1 style="font-family: 'Caveat', cursive; font-size: 3.5rem; color: var(--dark-pink);">Thank You ❤️</h1>
+        <p style="margin-top: 10px; color: #666;">Yeayyy! Makasih banyak udah dimaafin Ms! 🥰</p>
+        <p style="color: #888; font-size: 0.9rem; margin-top: 5px;">Kirim tanggapan atau omelan Ms di sini ya:</p>
         
         <div class="input-box-container">
-            <textarea class="custom-textarea" id="userMessage" placeholder="Ketik pesan balasanmu di sini... ✨"></textarea>
+            <textarea class="custom-textarea" id="userMessage" placeholder="Ketik pesan balasan Ms di sini... ✨"></textarea>
             <button class="btn" style="background-color: #25D366; color: white; width: 100%; margin-top: 15px;" onclick="sendToWhatsApp()">
-                Send to WhatsApp 💬
+                Kirim ke WhatsApp 💬
             </button>
         </div>
     </div>
@@ -586,8 +587,8 @@
             }, 1800);
         }
 
-        // --- 5. TYPING EFFECT ---
-        const messageText = "Hai... Makasih ya udah mau ngebuka pesan ini. Lewat website sederhana ini, aku pengen nunjukin beberapa hal dan momen yang menurutku berharga banget. Disimak sampai habis ya... ✨";
+        // --- 5. TYPING EFFECT (DIPERCEPAT KETIKANNYA) ---
+        const messageText = "Halo, Ms. Nana. ✨\n\nKalau Ms. sudah buka amplop ini, aku mau bilang sedikit.\n\nMaaf ya, Ms, kalau selama ini aku juga pernah bikin Ms. kesal, atau mungkin ada sikap aku yang kurang berkenan. Aku tahu aku juga bukan murid yang selalu gampang dihadapi. 🥺👉👈\n\nTapi aku juga mau minta maaf kalau kadang aku suka bingung menghadapi Ms. yang kadang ngambek, tiba-tiba kesal, atau bikin kami ikut panik wkwk. 😂 Walaupun kadang bikin pusing, sebenarnya itu juga jadi salah satu hal yang bikin suasana kelas jadi berkesan.\n\nTerima kasih ya, Ms, karena sudah sabar menghadapi kami dengan segala tingkahnya. Terima kasih juga sudah tetap peduli dan mau mengurus kami walaupun pasti melelahkan. 💖\n\nSemoga nanti Ms. selalu sehat, bahagia, dan tetap jadi Ms. Nana yang kami kenal. ✨\n\nTerima kasih untuk semuanya, Ms. 🙏🌸";
         let index = 0;
         
         function startTyping() {
@@ -595,9 +596,10 @@
             box.innerHTML = ""; 
             function type() {
                 if (index < messageText.length) {
+                    // Cepat mengetik: 25ms per karakter (sebelumnya 45ms)
                     box.innerHTML += messageText.charAt(index);
                     index++;
-                    setTimeout(type, 45);
+                    setTimeout(type, 25); 
                 } else {
                     document.getElementById('btnLanjut').style.display = 'inline-block';
                 }
@@ -621,7 +623,7 @@
             }
 
             const nomorWA = "62895359274080"; 
-            const teksFormat = encodeURIComponent(`Hai! Ini balasan aku setelah baca websitemu:\n\n"${pesanDia}"\n\n❤️`);
+            const teksFormat = encodeURIComponent(`Hai Ms! Ini balasan aku setelah baca websitemu:\n\n"${pesanDia}"\n\n❤️`);
             
             window.open(`https://wa.me/${nomorWA}?text=${teksFormat}`, '_blank');
         }
