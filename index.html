@@ -228,10 +228,19 @@
         }
 
         /* --- 5. TIMELINE & FOTO POLAROID ZIGZAG --- */
+        #timelineScreen {
+            display: none;
+            height: auto; /* Membuka kunci tinggi kaku agar foto tidak mentok ke atas */
+            min-height: 100vh;
+            overflow-y: auto; /* Memungkinkan halaman di-scroll dengan mulus */
+            padding-top: 60px; /* Memberi ruang di atas agar foto pertama tidak terpotong */
+            padding-bottom: 60px;
+        }
+        
         .polaroid-gallery {
             display: flex;
             flex-direction: column;
-            gap: 35px; /* Jarak antar polaroid dibuat lebih lapang */
+            gap: 40px; /* Jarak antar foto lebih longgar */
             width: 100%;
             margin: 30px 0;
             padding: 10px;
@@ -345,10 +354,9 @@
     <!-- Tombol Audio Estetik -->
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
     
-    <!-- AUDIO: Instrumen Piano Klasik Romantis Tanpa Lag -->
+    <!-- AUDIO: Membaca file lokal 'lagu.mp3' di folder GitHub Anda -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptrackid=255743" type="audio/mpeg">
+        <source src="lagu.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Kotak Notifikasi Imut -->
@@ -395,9 +403,9 @@
         <button class="btn btn-yes" id="btnLanjut" style="margin-top: 30px; display: none;" onclick="nextScreen('timelineScreen')">Lihat Momen Kita 💖</button>
     </div>
 
-    <!-- 5. TIMELINE & FOTO SERANGKAIAN (LENGKAP 4 FOTO - STRUKTUR ZIGZAG) -->
-    <div class="screen" id="timelineScreen" style="justify-content: flex-start; overflow-y: auto;">
-        <h2 style="color: var(--dark-pink); margin-top: 10px; margin-bottom: 5px;">Our Moments ✨</h2>
+    <!-- 5. TIMELINE & FOTO SERANGKAIAN (LENGKAP 4 FOTO - STRUKTUR ZIGZAG SEGAR) -->
+    <div class="screen" id="timelineScreen" style="justify-content: flex-start;">
+        <h2 style="color: var(--dark-pink); margin-bottom: 5px;">Our Moments ✨</h2>
         <p style="color: #999; font-size: 0.9rem; margin-bottom: 10px;">Ingat momen-momen ini gak?</p>
         
         <div class="polaroid-gallery">
@@ -463,7 +471,6 @@
         const musicBtn = document.getElementById('musicBtn');
         let hasInteracted = false;
 
-        // Memastikan volume suara pas dan enak didengar
         music.volume = 0.6;
 
         function playMusic() {
@@ -471,7 +478,7 @@
                 musicBtn.classList.add('playing');
                 musicBtn.innerText = '🎵';
             }).catch(err => {
-                console.log("Autoplay ditolak browser. Musik menyala setelah ketukan pertama.");
+                console.log("Autoplay dicegah browser, menunggu interaksi pengguna.");
             });
         }
 
@@ -487,7 +494,7 @@
             }
         }
 
-        // Pemicu musik otomatis begitu ada sentuhan/ketukan pertama di layar mana saja
+        // Jalankan musik begitu pengguna menyentuh/klik layar pertama kali
         document.addEventListener('click', () => {
             if (!hasInteracted) {
                 playMusic();
@@ -518,6 +525,10 @@
             setTimeout(() => {
                 const nextScreenEl = document.getElementById(nextId);
                 nextScreenEl.classList.add('active');
+                
+                // Menggulung layar kembali ke bagian paling atas saat berpindah halaman
+                window.scrollTo(0, 0);
+                nextScreenEl.scrollTop = 0;
                 
                 if(nextId === 'textScreen') {
                     startTyping();
@@ -575,7 +586,7 @@
         
         function startTyping() {
             const box = document.getElementById('typingBox');
-            box.innerHTML = ""; // reset agar bersih
+            box.innerHTML = ""; 
             function type() {
                 if (index < messageText.length) {
                     box.innerHTML += messageText.charAt(index);
